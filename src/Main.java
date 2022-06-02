@@ -1,5 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +11,7 @@ public class Main {
         int default_amount_of_lives = 6;
         int lives = default_amount_of_lives;
         int count_of_guesses = 0;
-
+        int guess;
 
         // INIT RANDOM NUMBER
         Random number_generator_obj = new Random();
@@ -26,9 +28,8 @@ public class Main {
         // GAME LOOP
         while (lives > 0) {
 
-            //USER INPUT
-            System.out.print("\nTake a guess.\n>\t");
-            int guess = myObj.nextInt();
+            //USER INPUT & VALIDATION
+            guess = guess_input(myObj);
 
 
             // GUESSING LOGIC
@@ -76,5 +77,40 @@ public class Main {
 
 
         }
+
+
     }
+
+    public static int guess_input(Scanner input_scanner) {
+        int guess = -999;
+        System.out.print("\nTake a guess.\n>\t");
+        boolean validation = false;
+        while (!validation) {
+
+            try {
+                guess = Integer.parseInt(input_scanner.next());
+                if (guess >= 1 && guess <= 20) {
+                    validation = true;
+                } else {
+                    System.out.println("Please choose number between 1 - 20... ");
+                    System.out.print(">\t");
+                    validation = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.print("Please enter valid whole number from 1 - 20:\n>\t");
+                //guess = Integer.parseInt(input_scanner.next());
+                validation = false;
+            } catch (NumberFormatException e) {
+                System.out.print("Please enter valid whole number from 1 - 20:\n>\t");
+                //guess = Integer.parseInt(input_scanner.next());
+                validation = false;
+            }
+        }
+        if (validation) {
+            return guess;
+        } else {
+            return 0;
+        }
+    }
+
 }
