@@ -63,6 +63,7 @@ public class Main {
             if (lives == 0) {
 
                 //RESTART GAME
+                    System.out.println("OUT OF LIVES!");
                 System.out.print("Would you like to play again? (y/n) \n>\t");
                 String losing_restart = myObj.next();
                 if (losing_restart.toLowerCase().startsWith("y")) {
@@ -83,28 +84,12 @@ public class Main {
 
     public static int guess_input(Scanner input_scanner) {
         int guess = -999;
+        String USER_INPUT;
         System.out.print("\nTake a guess.\n>\t");
         boolean validation = false;
         while (!validation) {
-
-            try {
-                guess = Integer.parseInt(input_scanner.next());
-                if (guess >= 1 && guess <= 20) {
-                    validation = true;
-                } else {
-                    System.out.println("Please choose number between 1 - 20... ");
-                    System.out.print(">\t");
-                    validation = false;
-                }
-            } catch (InputMismatchException e) {
-                System.out.print("Please enter valid whole number from 1 - 20:\n>\t");
-                //guess = Integer.parseInt(input_scanner.next());
-                validation = false;
-            } catch (NumberFormatException e) {
-                System.out.print("Please enter valid whole number from 1 - 20:\n>\t");
-                //guess = Integer.parseInt(input_scanner.next());
-                validation = false;
-            }
+            USER_INPUT = input_scanner.next();
+            validation = NumberGuessValidation.guess_input_validation(USER_INPUT);
         }
         if (validation) {
             return guess;
